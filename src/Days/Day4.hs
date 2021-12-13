@@ -9,15 +9,13 @@ firstQuestion :: String -> IO Int
 firstQuestion filename = do
   (nums, tables) <- fileToListAndBingoTables filename
   let (lastNum, table) = evaluateTablesAndRunRound 0 nums tables
-  return (lastNum * (sumUnmarked table))
+  return (lastNum * sumUnmarked table)
 
 secondQuestion :: String -> IO Int
 secondQuestion filename = do
   (nums, tables) <- fileToListAndBingoTables filename
   let (lastNum, table) = evaluateLosingTablesAndRunRound 0 nums tables
-  putStrLn (show table)
-  putStrLn (show lastNum)
-  return (lastNum * (sumUnmarked table))
+  return (lastNum * sumUnmarked table)
 
 fileToListAndBingoTables :: String -> IO ([Int], [Table])
 fileToListAndBingoTables filename = do
@@ -39,7 +37,7 @@ mountBingoTables table _ = table
 
 sumUnmarked :: Table -> Int
 sumUnmarked table =
-  sum (map (sum . map (\(x, _) -> x) . filter (not . isValueMarked)) table)
+  sum (map (sum . map fst . filter (not . isValueMarked)) table)
 
 readTableLine :: String -> [(Int, Bool)]
 readTableLine line =
@@ -47,9 +45,10 @@ readTableLine line =
 
 evaluateTablesAndRunRound :: Int -> [Int] -> [Table] -> (Int, Table)
 evaluateTablesAndRunRound prevNum (num:numList) tables =
-  case (find isTableComplete tables) of
+  case find isTableComplete tables of
     Nothing -> evaluateTablesAndRunRound num numList (updateTables num tables)
     Just table -> (prevNum, table)
+evaluateTablesAndRunRound _ _ _ = error "This should not happen"
 
 evaluateLosingTablesAndRunRound :: Int -> [Int] -> [Table] -> (Int, Table)
 evaluateLosingTablesAndRunRound prevNum _ [winningTable] =
@@ -57,9 +56,10 @@ evaluateLosingTablesAndRunRound prevNum _ [winningTable] =
 evaluateLosingTablesAndRunRound prevNum (num:numList) tables =
   evaluateLosingTablesAndRunRound num numList $
   (updateTables num . filter (not . isTableComplete)) tables
+evaluateLosingTablesAndRunRound _ _ _ = error "This should not happen"
 
 updateTables :: Int -> [Table] -> [Table]
-updateTables num tables = map (map (map (\(x, b) -> (x, b || x == num)))) tables
+updateTables num = map (map (map (\(x, b) -> (x, b || x == num))))
 
 isTableComplete :: Table -> Bool
 isTableComplete table = any isLineComplete table || isAnyColumnComplete table
@@ -67,14 +67,14 @@ isTableComplete table = any isLineComplete table || isAnyColumnComplete table
 isAnyColumnComplete :: Table -> Bool
 isAnyColumnComplete ([]:_) = False
 isAnyColumnComplete lines =
-  (all id . mapColumnMarked) lines ||
+  (and . mapColumnMarked) lines ||
   isAnyColumnComplete (map (\(_:rest) -> rest) lines)
 
 isLineComplete :: [(Int, Bool)] -> Bool
 isLineComplete = all isValueMarked
 
 mapColumnMarked :: Table -> [Bool]
-mapColumnMarked lines = map (isValueMarked . head) lines
+mapColumnMarked = map (isValueMarked . head)
 
 isValueMarked :: (Int, Bool) -> Bool
 isValueMarked (_, b) = b
