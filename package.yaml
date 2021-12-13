@@ -23,6 +23,7 @@ dependencies:
 - base
 - split
 - containers
+- dsp
 
 library:
   source-dirs: src
