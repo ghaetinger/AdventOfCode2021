@@ -16,7 +16,8 @@ spec = do
   describe "Second Question" $ do
     it "Example input" $
       secondQuestion "./res/day6/example.txt" `shouldReturn` 26984457539
-    it "Result" $ secondQuestion "./res/day6/input.txt" `shouldReturn` 1689540415957
+    it "Result" $
+      secondQuestion "./res/day6/input.txt" `shouldReturn` 1689540415957
 
 main :: IO ()
 main = hspec spec
