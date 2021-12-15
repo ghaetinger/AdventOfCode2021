@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Days.Day1
+      Days.Day10
       Days.Day2
       Days.Day3
       Days.Day4
@@ -65,6 +66,7 @@ test-suite AdventOfCode2021-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Days.Day10Spec
       Days.Day1Spec
       Days.Day2Spec
       Days.Day3Spec
