@@ -19,18 +19,20 @@ exampleVectors =
 spec :: Spec
 spec = do
   describe "Auxiliary Functions" $ do
-    it "readFileToVectors" $
-      readFileToVectors "./res/day5/example.txt" `shouldReturn` exampleVectors
+    it "readFileToVectors"
+      $              readFileToVectors "./res/day5/example.txt"
+      `shouldReturn` exampleVectors
     it "buildLinePoints" $ do
-      buildLinePoints ((2, 7), (2, 10)) `shouldBe`
-        [(2, 7), (2, 8), (2, 9), (2, 10)]
+      buildLinePoints ((2, 7), (2, 10))
+        `shouldBe` [(2, 7), (2, 8), (2, 9), (2, 10)]
       buildLinePoints ((9, 7), (7, 9)) `shouldBe` [(9, 7), (8, 8), (7, 9)]
   describe "First Question" $ do
     it "Example input" $ firstQuestion "./res/day5/example.txt" `shouldReturn` 5
     it "Result" $ firstQuestion "./res/day5/input.txt" `shouldReturn` 5197
   describe "Second Question" $ do
-    it "Example input" $
-      secondQuestion "./res/day5/example.txt" `shouldReturn` 12
+    it "Example input"
+      $              secondQuestion "./res/day5/example.txt"
+      `shouldReturn` 12
     it "Result" $ secondQuestion "./res/day5/input.txt" `shouldReturn` 18605
 
 main :: IO ()

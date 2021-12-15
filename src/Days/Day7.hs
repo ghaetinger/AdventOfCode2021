@@ -14,10 +14,9 @@ firstQuestion filename = do
 secondQuestion :: String -> IO Int
 secondQuestion filename = do
   posList <- fileToPosList filename
-  let avgs = getPossibleAvgValues posList
-  let intVals = map round posList
+  let avgs      = getPossibleAvgValues posList
+  let intVals   = map round posList
   let distances = map (calculateProgressionList intVals) avgs
-  print distances
   return (minimum distances)
 
 getPossibleAvgValues :: [Float] -> [Int]
@@ -25,11 +24,11 @@ getPossibleAvgValues values =
   avgValues $ ((/ fromIntegral (length values)) . sum) values
 
 avgValues :: Float -> [Int]
-avgValues avg = [floor (avg), ceiling (avg)]
+avgValues avg = [floor avg, ceiling avg]
 
 calculateProgressionList :: [Int] -> Int -> Int
 calculateProgressionList values position =
-  (sum . map sumProgression . map (\x -> abs (x - position))) values
+  (sum . map (sumProgression . (\x -> abs (x - position)))) values
 
 sumProgression :: Int -> Int
 sumProgression a = sum [1 .. a]

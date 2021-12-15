@@ -24,17 +24,17 @@ secondQuestion filename = do
   return (horizontal * depth)
 
 processFinalPosition :: Position -> [(String, Int)] -> Position
-processFinalPosition pos ((dir, mag):tail) =
+processFinalPosition pos ((dir, mag) : tail) =
   processFinalPosition (processPosition pos dir mag) tail
 processFinalPosition pos _ = pos
 
 processPosition :: Position -> String -> Int -> Position
 processPosition (SimplePosition h d) "forward" mag = SimplePosition (h + mag) d
-processPosition (SimplePosition h d) "up" mag = SimplePosition h (d - mag)
-processPosition (SimplePosition h d) "down" mag = SimplePosition h (d + mag)
+processPosition (SimplePosition h d) "up"      mag = SimplePosition h (d - mag)
+processPosition (SimplePosition h d) "down"    mag = SimplePosition h (d + mag)
 processPosition (AimPosition h d aim) "forward" mag =
   AimPosition (h + mag) (d + (aim * mag)) aim
-processPosition (AimPosition h d aim) "up" mag = AimPosition h d (aim - mag)
+processPosition (AimPosition h d aim) "up"   mag = AimPosition h d (aim - mag)
 processPosition (AimPosition h d aim) "down" mag = AimPosition h d (aim + mag)
 
 readFileToDirectionTupleVec :: String -> IO [(String, Int)]
@@ -47,5 +47,5 @@ parseLineToTuple :: String -> (String, Int)
 parseLineToTuple = parseTuple . splitOn " "
 
 parseTuple :: [String] -> (String, Int)
-parseTuple (dir:mag:_) = (dir, read mag)
-parseTuple _           = ("", 0)
+parseTuple (dir : mag : _) = (dir, read mag)
+parseTuple _               = ("", 0)

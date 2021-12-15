@@ -65,30 +65,32 @@ exampleAnswerTable =
 spec :: Spec
 spec = do
   describe "Auxiliary Functions" $ do
-    it "readTableLine" $
-      readTableLine "1  2   3    4" `shouldBe`
-      [(1, False), (2, False), (3, False), (4, False)]
-    it "fileToListAndBingoTables" $
-      fileToListAndBingoTables "./res/day4/example.txt" `shouldReturn`
-      (exampleListNums, exampleTables)
+    it "readTableLine"
+      $          readTableLine "1  2   3    4"
+      `shouldBe` [(1, False), (2, False), (3, False), (4, False)]
+    it "fileToListAndBingoTables"
+      $              fileToListAndBingoTables "./res/day4/example.txt"
+      `shouldReturn` (exampleListNums, exampleTables)
     it "isLineComplete" $ do
-      isLineComplete [(1, True), (1, True), (1, True), (1, True)] `shouldBe`
-        True
-      isLineComplete [(1, True), (1, False), (1, True), (1, True)] `shouldBe`
-        False
-    it "updateTables" $
-      updateTables 2 [[[(2, False), (3, False)], [(4, False), (2, False)]]] `shouldBe`
-      [[[(2, True), (3, False)], [(4, False), (2, True)]]]
-    it "evaluateTablesAndRunRound" $
-      evaluateTablesAndRunRound 0 exampleListNums exampleTables `shouldBe`
-      (24, exampleAnswerTable)
+      isLineComplete [(1, True), (1, True), (1, True), (1, True)]
+        `shouldBe` True
+      isLineComplete [(1, True), (1, False), (1, True), (1, True)]
+        `shouldBe` False
+    it "updateTables"
+      $ updateTables 2 [[[(2, False), (3, False)], [(4, False), (2, False)]]]
+      `shouldBe` [[[(2, True), (3, False)], [(4, False), (2, True)]]]
+    it "evaluateTablesAndRunRound"
+      $          evaluateTablesAndRunRound 0 exampleListNums exampleTables
+      `shouldBe` (24, exampleAnswerTable)
   describe "First Question" $ do
-    it "Example input" $
-      firstQuestion "./res/day4/example.txt" `shouldReturn` 4512
+    it "Example input"
+      $              firstQuestion "./res/day4/example.txt"
+      `shouldReturn` 4512
     it "Result" $ firstQuestion "./res/day4/input.txt" `shouldReturn` 6592
   describe "Second Question" $ do
-    it "Example input" $
-      secondQuestion "./res/day4/example.txt" `shouldReturn` 1924
+    it "Example input"
+      $              secondQuestion "./res/day4/example.txt"
+      `shouldReturn` 1924
     it "Result" $ secondQuestion "./res/day4/input.txt" `shouldReturn` 31755
 
 main :: IO ()

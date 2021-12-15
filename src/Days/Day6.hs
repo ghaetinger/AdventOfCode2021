@@ -15,16 +15,15 @@ secondQuestion = runQuestion 256
 runQuestion :: Int -> String -> IO Int
 runQuestion n filename = do
   ls <- readFileIntoCountList filename
-  let (finalFishes, finalBreeded) =
-        foldl
-          (\(fish, breed) _ -> updateDay fish breed)
-          (ls, initialBreededFishes)
-          [1 .. n]
+  let (finalFishes, finalBreeded) = foldl
+        (\(fish, breed) _ -> updateDay fish breed)
+        (ls, initialBreededFishes)
+        [1 .. n]
   return (sum (finalFishes ++ finalBreeded))
 
 updateDay :: [Int] -> [Int] -> ([Int], [Int])
-updateDay (h:tail) (sev:eigh:_) = (tail ++ [sev + h], [eigh, h])
-updateDay _ _                   = error "This should not happen"
+updateDay (h : tail) (sev : eigh : _) = (tail ++ [sev + h], [eigh, h])
+updateDay _          _                = error "This should not happen"
 
 readFileIntoCountList :: String -> IO [Int]
 readFileIntoCountList filename = do

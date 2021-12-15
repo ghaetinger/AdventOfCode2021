@@ -13,16 +13,14 @@ secondQuestion filename = do
   return ((countIncreases . slidingWindowSum) levels)
 
 countIncreases :: [Int] -> Int
-countIncreases (a:b:tail) =
-  (if b > a
-     then 1
-     else 0) +
-  countIncreases (b : tail)
+countIncreases (a : b : tail) =
+  (if b > a then 1 else 0) + countIncreases (b : tail)
 countIncreases levels = 0
 
 slidingWindowSum :: [Int] -> [Int]
-slidingWindowSum (a:b:c:tail) = (a + b + c) : slidingWindowSum (b : c : tail)
-slidingWindowSum levels       = []
+slidingWindowSum (a : b : c : tail) =
+  (a + b + c) : slidingWindowSum (b : c : tail)
+slidingWindowSum levels = []
 
 readFileToIntVec :: String -> IO [Int]
 readFileToIntVec filename = do

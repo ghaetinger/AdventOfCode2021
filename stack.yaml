@@ -15,8 +15,7 @@
 # a snapshot provided as a file might change, whereas a url resource does not.
 #
 # resolver: ./custom-snapshot.yaml
-resolver:
-  url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/18.yaml
+resolver: ghc-9.0.1
 # resolver: lts-17.11
 
 # User packages to be built.
@@ -37,6 +36,24 @@ packages:
 extra-deps:
 - hindent-5.3.2
 - stylish-haskell-0.13.0.0
+- dsp-0.2.5.1
+- split-0.2.3.4
+- random-1.2.1
+- splitmix-0.1.0.4
+- hspec-2.9.4
+- QuickCheck-2.14.2
+- hspec-core-2.9.4
+- hspec-discover-2.9.4
+- hspec-expectations-0.8.2
+- HUnit-1.6.2.0@sha256:1a79174e8af616117ad39464cac9de205ca923da6582825e97c10786fda933a4,1588
+- ansi-terminal-0.11.1@sha256:e8428fcd5fe9d4e8a796a0c8107b7288a0a93ffaa8d761cf51f803384284bd77,3321
+- call-stack-0.4.0@sha256:ac44d2c00931dc20b01750da8c92ec443eb63a7231e8550188cb2ac2385f7feb,1200
+- clock-0.8.2@sha256:473ffd59765cc67634bdc55b63c699a85addf3a024089073ec2a862881e83e2a,4313
+- quickcheck-io-0.2.0@sha256:7bf0b68fb90873825eb2e5e958c1b76126dcf984debb998e81673e6d837e0b2d,1133
+- setenv-0.1.1.3@sha256:c5916ac0d2a828473cd171261328a290afe0abd799db1ac8c310682fe778c45b,1053
+- tf-random-0.5@sha256:14012837d0f0e18fdbbe3d56e67da8622ee5e20b180abce952dd50bd9f36b326,3983
+- colour-2.3.6@sha256:ebdcbf15023958838a527e381ab3c3b1e99ed12d1b25efeb7feaa4ad8c37664a,2378
+- primitive-0.7.3.0@sha256:6b28a1c0572f5ca50597ba8388aeade21515842969ae192cdc6bfca81367bf56,2951
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
