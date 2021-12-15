@@ -33,6 +33,7 @@ library
       Days.Day6
       Days.Day7
       Days.Day8
+      Days.Day9
       Lib
   other-modules:
       Paths_AdventOfCode2021
@@ -72,6 +73,7 @@ test-suite AdventOfCode2021-test
       Days.Day6Spec
       Days.Day7Spec
       Days.Day8Spec
+      Days.Day9Spec
       Paths_AdventOfCode2021
   hs-source-dirs:
       test
