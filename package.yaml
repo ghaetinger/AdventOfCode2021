@@ -24,6 +24,7 @@ dependencies:
 - split
 - containers
 - dsp
+- lens
 
 library:
   source-dirs: src
