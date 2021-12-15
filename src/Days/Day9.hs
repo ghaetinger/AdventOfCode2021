@@ -1,4 +1,3 @@
-{-# LANGUAGE TupleSections #-}
 module Days.Day9 where
 
 import           Data.Char
@@ -8,8 +7,7 @@ import           Data.Set                       ( Set
                                                 , member
                                                 )
 import qualified Data.Set                      as Set
-
-type CoordMap = [[Int]]
+import           Util.MapTools
 
 firstQuestion :: String -> IO Int
 firstQuestion filename = do
@@ -57,14 +55,6 @@ buildTestCoordinates lengthX lengthY = map
   (\y -> map (getNeighbors lengthX lengthY y) [0 .. lengthX - 1])
   [0 .. lengthY - 1]
 
-buildCoordinates :: Int -> Int -> [[(Int, Int)]]
-buildCoordinates lengthX lengthY =
-  map (\y -> map (, y) [0 .. lengthX - 1]) [0 .. lengthY - 1]
-
-getNeighbors :: Int -> Int -> Int -> Int -> [(Int, Int)]
-getNeighbors maxx maxy y x =
-  filter (inBounds maxx maxy) [(x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y)]
-
 findBasin
   :: CoordMap -> Int -> Int -> Set (Int, Int) -> (Int, Int) -> Set (Int, Int)
 findBasin cmap maxx maxy explored toexplore
@@ -73,12 +63,6 @@ findBasin cmap maxx maxy explored toexplore
   | otherwise = foldl (findBasin cmap maxx maxy)
                       (Set.insert toexplore explored)
                       ((\(x, y) -> getNeighbors maxx maxy y x) toexplore)
-
-inBounds :: Int -> Int -> (Int, Int) -> Bool
-inBounds maxx maxy (x, y) = x >= 0 && x < maxx && y >= 0 && y < maxy
-
-accessCoordinate :: CoordMap -> (Int, Int) -> Int
-accessCoordinate m (x, y) = ((!! x) . (!! y)) m
 
 readValueMap :: String -> IO CoordMap
 readValueMap filename = do

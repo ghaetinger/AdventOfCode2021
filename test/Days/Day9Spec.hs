@@ -17,9 +17,6 @@ cmap =
 spec :: Spec
 spec = do
   describe "Auxiliary Functions" $ do
-    it "accessCoordinate"
-      $          accessCoordinate [[1, 2], [3, 4]] (1, 0)
-      `shouldBe` 2
     it "findBasin"
       $          findBasin cmap 10 5 Set.empty (6, 4)
       `shouldBe` Set.fromList
