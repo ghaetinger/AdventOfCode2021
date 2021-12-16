@@ -14,6 +14,8 @@ import           Data.Set                       ( Set
 import qualified Data.Set                      as Set
 import           GHC.Unicode                    ( isLower )
 
+import           Util.ListTools
+
 firstQuestion :: String -> IO Int
 firstQuestion filename = do
   routeMap <- readRoute filename
@@ -46,9 +48,6 @@ filterStartRoutes =
 
 filterEndRoutes :: Map String (Set String) -> Map String (Set String)
 filterEndRoutes = Map.delete "end"
-
-rmdups :: (Ord a) => [a] -> [a]
-rmdups = map head . group . sort
 
 constructRoutes
   :: Map String (Set String) -> Set String -> String -> [[String]]

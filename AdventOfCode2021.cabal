@@ -29,6 +29,7 @@ library
       Days.Day10
       Days.Day11
       Days.Day12
+      Days.Day13
       Days.Day2
       Days.Day3
       Days.Day4
@@ -38,6 +39,7 @@ library
       Days.Day8
       Days.Day9
       Lib
+      Util.ListTools
       Util.MapTools
   other-modules:
       Paths_AdventOfCode2021
@@ -74,6 +76,7 @@ test-suite AdventOfCode2021-test
       Days.Day10Spec
       Days.Day11Spec
       Days.Day12Spec
+      Days.Day13Spec
       Days.Day1Spec
       Days.Day2Spec
       Days.Day3Spec
