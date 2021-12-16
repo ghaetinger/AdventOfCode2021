@@ -28,6 +28,7 @@ library
       Days.Day1
       Days.Day10
       Days.Day11
+      Days.Day12
       Days.Day2
       Days.Day3
       Days.Day4
@@ -72,6 +73,7 @@ test-suite AdventOfCode2021-test
   other-modules:
       Days.Day10Spec
       Days.Day11Spec
+      Days.Day12Spec
       Days.Day1Spec
       Days.Day2Spec
       Days.Day3Spec
