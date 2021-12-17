@@ -36,7 +36,7 @@ spec = do
       $              firstQuestion "./res/day13/example.txt"
       `shouldReturn` 17
     it "Result" $ firstQuestion "./res/day13/input.txt" `shouldReturn` 631
-  describe "First Question" $ do
+  describe "Second Question" $ do
     it "Result" $ secondQuestion "./res/day13/input.txt" `shouldReturn` ()
 
 main :: IO ()
