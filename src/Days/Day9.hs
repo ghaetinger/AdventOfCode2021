@@ -30,20 +30,25 @@ secondQuestion filename = do
 flatten :: [[[Int]]] -> [Int]
 flatten = concatMap concat
 
-getLowestPoints :: CoordMap -> [[[(Int, Int)]]] -> [[Int]]
+getLowestPoints :: CoordMap Int -> [[[(Int, Int)]]] -> [[Int]]
 getLowestPoints cmap = zipWith (zipWith (valueIfLowerThanCoords cmap)) cmap
 
 getBasins
-  :: CoordMap -> Int -> Int -> [[(Int, Int)]] -> [[[(Int, Int)]]] -> [[[Int]]]
+  :: CoordMap Int
+  -> Int
+  -> Int
+  -> [[(Int, Int)]]
+  -> [[[(Int, Int)]]]
+  -> [[[Int]]]
 getBasins cmap maxx maxy =
   zipWith (zipWith (basinIfLowerThanCoords cmap maxx maxy))
 
-valueIfLowerThanCoords :: CoordMap -> Int -> [(Int, Int)] -> Int
+valueIfLowerThanCoords :: CoordMap Int -> Int -> [(Int, Int)] -> Int
 valueIfLowerThanCoords cmap val coords =
   if all ((> val) . accessCoordinate cmap) coords then val else -1
 
 basinIfLowerThanCoords
-  :: CoordMap -> Int -> Int -> (Int, Int) -> [(Int, Int)] -> [Int]
+  :: CoordMap Int -> Int -> Int -> (Int, Int) -> [(Int, Int)] -> [Int]
 basinIfLowerThanCoords cmap maxx maxy coord coords =
   if all ((> accessCoordinate cmap coord) . accessCoordinate cmap) coords
     then (map (accessCoordinate cmap) . Set.toList)
@@ -56,7 +61,12 @@ buildTestCoordinates lengthX lengthY = map
   [0 .. lengthY - 1]
 
 findBasin
-  :: CoordMap -> Int -> Int -> Set (Int, Int) -> (Int, Int) -> Set (Int, Int)
+  :: CoordMap Int
+  -> Int
+  -> Int
+  -> Set (Int, Int)
+  -> (Int, Int)
+  -> Set (Int, Int)
 findBasin cmap maxx maxy explored toexplore
   | toexplore `member` explored = explored
   | accessCoordinate cmap toexplore == 9 = explored
@@ -64,7 +74,7 @@ findBasin cmap maxx maxy explored toexplore
                       (Set.insert toexplore explored)
                       ((\(x, y) -> getNeighbors maxx maxy y x) toexplore)
 
-readValueMap :: String -> IO CoordMap
+readValueMap :: String -> IO (CoordMap Int)
 readValueMap filename = do
   contents <- readFile filename
   return $ (map (map digitToInt) . lines) contents

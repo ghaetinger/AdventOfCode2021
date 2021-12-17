@@ -3,7 +3,7 @@ module Util.MapTools where
 
 import           Control.Lens
 
-type CoordMap = [[Int]]
+type CoordMap a = [[a]]
 
 getNeighbors :: Int -> Int -> Int -> Int -> [(Int, Int)]
 getNeighbors maxx maxy y x =
@@ -29,8 +29,8 @@ buildCoordinates :: Int -> Int -> [[(Int, Int)]]
 buildCoordinates lengthX lengthY =
   map (\y -> map (, y) [0 .. lengthX - 1]) [0 .. lengthY - 1]
 
-accessCoordinate :: CoordMap -> (Int, Int) -> Int
+accessCoordinate :: CoordMap a -> (Int, Int) -> a
 accessCoordinate m (x, y) = ((!! x) . (!! y)) m
 
-writeValue :: CoordMap -> (Int, Int) -> Int -> CoordMap
+writeValue :: CoordMap a -> (Int, Int) -> a -> CoordMap a
 writeValue cmap (x, y) val = cmap & element y . element x .~ val

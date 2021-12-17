@@ -3,7 +3,7 @@ module Days.Day11 where
 import           Data.Char                      ( digitToInt )
 import           Util.MapTools
 
-type OctopusMap = (CoordMap, Int)
+type OctopusMap = (CoordMap Int, Int)
 
 firstQuestion :: String -> IO Int
 firstQuestion filename = do
@@ -53,7 +53,7 @@ cleanEnergy :: OctopusMap -> (Int, Int) -> Int -> OctopusMap
 cleanEnergy (cmap, acc) (x, y) val | val < 0   = (writeValue cmap (x, y) 0, acc)
                                    | otherwise = (cmap, acc)
 
-readMap :: String -> IO CoordMap
+readMap :: String -> IO (CoordMap Int)
 readMap filename = do
   contents <- readFile filename
   return ((map (map digitToInt) . lines) contents)
