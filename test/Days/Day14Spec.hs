@@ -5,10 +5,6 @@ import           Test.Hspec
 
 spec :: Spec
 spec = do
---  describe "Auxiliary Functions" $ do
---    it "buildCommonBits"
---      $          buildCommonBits exampleList
---      `shouldBe` [1, 0, 1, 1, 0]
   describe "First Question" $ do
     it "Example input"
       $              firstQuestion "./res/day14/example.txt"

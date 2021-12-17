@@ -25,6 +25,7 @@ dependencies:
 - containers
 - dsp
 - lens
+- pqueue 
 
 library:
   source-dirs: src

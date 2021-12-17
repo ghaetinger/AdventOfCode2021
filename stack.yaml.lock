@@ -361,4 +361,11 @@ packages:
       size: 584
   original:
     hackage: void-0.7.3@sha256:13d30f62fcdf065e595d679d4ac8b4b0c1bb1a1b73db7b5b5a8f857cb5c8a546,1857
+- completed:
+    hackage: pqueue-1.4.1.4@sha256:6c8ca63f67241a3b57ed063c9f72d70dbbb6a1115d735e49481bfaecd241b661,1867
+    pantry-tree:
+      sha256: 279e6c8c50be080b8eed7925036d4c247e176b9c26966554573d4cd69e24d8ce
+      size: 886
+  original:
+    hackage: pqueue-1.4.1.4@sha256:6c8ca63f67241a3b57ed063c9f72d70dbbb6a1115d735e49481bfaecd241b661,1867
 snapshots: []
