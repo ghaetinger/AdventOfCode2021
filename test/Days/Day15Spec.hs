@@ -27,8 +27,7 @@ spec = do
     it "Example input"
       $              secondQuestion "./res/day15/example.txt"
       `shouldReturn` 315
--- DISABLED AS IT TAKES 6 MINUTES TO RUN!
---   it "Result" $ secondQuestion "./res/day15/input.txt" `shouldReturn` 2952
+    it "Result" $ secondQuestion "./res/day15/input.txt" `shouldReturn` 2952
 
 main :: IO ()
 main = hspec spec

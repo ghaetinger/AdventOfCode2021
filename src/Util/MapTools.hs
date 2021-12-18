@@ -1,4 +1,5 @@
 {-# LANGUAGE TupleSections #-}
+
 module Util.MapTools where
 
 import           Control.Lens
@@ -34,3 +35,8 @@ accessCoordinate m (x, y) = ((!! x) . (!! y)) m
 
 writeValue :: CoordMap a -> (Int, Int) -> a -> CoordMap a
 writeValue cmap (x, y) val = cmap & element y . element x .~ val
+
+writeValueLazy :: (Int, Int) -> a -> CoordMap a -> CoordMap a
+writeValueLazy (x, y) val =
+  (\(p, hn : n) -> p ++ ((\(pr, _ : nr) -> pr ++ val : nr) . splitAt x) hn : n)
+    . splitAt y

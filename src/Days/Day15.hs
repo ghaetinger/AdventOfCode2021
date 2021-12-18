@@ -18,26 +18,24 @@ firstQuestion :: String -> IO Int
 firstQuestion filename = do
   cmap <- readMap filename
   let prev = map (map (const (-1, -1))) cmap
-  let dist =
-        ((\m -> writeValue m (0, 0) 0) . map (map (const veryHighValue))) cmap
+  let dist = (writeValueLazy (0, 0) 0 . map (map (const veryHighValue))) cmap
   let (maxx, maxy) = ((length . head) cmap, length cmap)
   let q = (Min.fromList . map (\coord -> (accessCoordinate dist coord, coord)))
         [(1, 0), (0, 1)]
-  return $ accessCoordinate (runDijkstra cmap dist maxx maxy (0, 0) q)
-                            (maxx - 1, maxy - 1)
+  let x = runDijkstra cmap dist maxx maxy (0, 0) q
+  return $ accessCoordinate x (maxx - 1, maxy - 1)
 
 secondQuestion :: String -> IO Int
 secondQuestion filename = do
   prevcmap <- readMap filename
-  let cmap = replicateCoordMap prevcmap 5
-  let prev = map (map (const (-1, -1))) cmap
-  let dist =
-        ((\m -> writeValue m (0, 0) 0) . map (map (const veryHighValue))) cmap
+  let cmap         = replicateCoordMap prevcmap 5
+  let prev         = map (map (const (-1, -1))) cmap
+  let dist = (writeValueLazy (0, 0) 0 . map (map (const veryHighValue))) cmap
   let (maxx, maxy) = ((length . head) cmap, length cmap)
   let q = (Min.fromList . map (\coord -> (accessCoordinate dist coord, coord)))
         [(1, 0), (0, 1)]
-  return $ accessCoordinate (runDijkstra cmap dist maxx maxy (0, 0) q)
-                            (maxx - 1, maxy - 1)
+  let x = runDijkstra cmap dist maxx maxy (0, 0) q
+  return $ accessCoordinate x (maxx - 1, maxy - 1)
 
 replicateCoordMap :: CoordMap Int -> Int -> CoordMap Int
 replicateCoordMap m n =
@@ -75,7 +73,7 @@ runDijkstra cmap dist maxx maxy (x, y) q
     (\(_d, _nq) c ->
       let alt = coordValue + accessCoordinate cmap c
       in  if alt < accessCoordinate dist c
-            then (writeValue _d c alt, Min.insert (alt, c) _nq)
+            then (writeValueLazy c alt _d, Min.insert (alt, c) _nq)
             else (_d, _nq)
     )
     (dist, q)
