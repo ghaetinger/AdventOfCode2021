@@ -161,7 +161,6 @@ spec = do
       (readPacket . packetStringToBitList) "EE00D40C823060"
         `shouldBe` (Operator 7 3 [Literal 2 1, Literal 4 2, Literal 1 3], 51)
     it "accumId" $ do
-      print $ packetStringToBitList "8A004A801A8002F478"
       (accumIds . fst . readPacket . packetStringToBitList) "8A004A801A8002F478"
         `shouldBe` 16
       (accumIds . fst . readPacket . packetStringToBitList)
@@ -183,7 +182,9 @@ spec = do
       +              31
     it "Result" $ firstQuestion "./res/day16/input.txt" `shouldReturn` 974
   describe "Second Question" $ do
-    it "Result" $ secondQuestion "./res/day16/input.txt" `shouldReturn` 180616437720 
+    it "Result"
+      $              secondQuestion "./res/day16/input.txt"
+      `shouldReturn` 180616437720
 
 main :: IO ()
 main = hspec spec
