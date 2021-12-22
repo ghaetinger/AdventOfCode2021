@@ -30,6 +30,15 @@ triples ls =
         concatMap (\j -> map (i, j, ) [0 .. length ls - 1]) [0 .. length ls - 1]))
     [0 .. length ls - 1]
 
+triplesNoDups :: (Ord a ) => [a] -> [(a, a, a)]
+triplesNoDups ls =
+    (filter (\(i, j, k) -> i <= j && i <= k && j <= k)
+   . map (\(i, j, k) -> (ls !! i, ls !! j, ls !! k)) .
+   concatMap
+     (\i ->
+        concatMap (\j -> map (i, j, ) [0 .. length ls - 1]) [0 .. length ls - 1]))
+    [0 .. length ls - 1]
+
 mostCommonElem list = fst $ maximumBy (compare `on` snd) elemCounts
   where
     elemCounts =
