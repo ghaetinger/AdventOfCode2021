@@ -20,18 +20,18 @@ secondQuestion filename = do
 fileToListAndBingoTables :: String -> IO ([Int], [Table])
 fileToListAndBingoTables filename = do
   contents <- readFile filename
-  let concatLines                   = lines contents
-  let (stringListNums : _ : tables) = concatLines
-  let listNums                      = map read $ splitOn "," stringListNums
-  let bingoTables                   = mountBingoTables [] tables
+  let concatLines = lines contents
+  let (stringListNums:_:tables) = concatLines
+  let listNums = map read $ splitOn "," stringListNums
+  let bingoTables = mountBingoTables [] tables
   return (listNums, bingoTables)
 
 mountBingoTables :: [Table] -> [String] -> [Table]
-mountBingoTables tables ("" : stringList) =
+mountBingoTables tables ("":stringList) =
   mountBingoTables ([] : tables) stringList
-mountBingoTables (table : rest) (line : stringList) =
+mountBingoTables (table:rest) (line:stringList) =
   mountBingoTables ((readTableLine line : table) : rest) stringList
-mountBingoTables [] (line : stringList) =
+mountBingoTables [] (line:stringList) =
   mountBingoTables [[readTableLine line]] stringList
 mountBingoTables table _ = table
 
@@ -44,7 +44,7 @@ readTableLine line =
   map (\x -> (read x, False)) $ (filter (/= "") . splitOn " ") line
 
 evaluateTablesAndRunRound :: Int -> [Int] -> [Table] -> (Int, Table)
-evaluateTablesAndRunRound prevNum (num : numList) tables =
+evaluateTablesAndRunRound prevNum (num:numList) tables =
   case find isTableComplete tables of
     Nothing -> evaluateTablesAndRunRound num numList (updateTables num tables)
     Just table -> (prevNum, table)
@@ -53,9 +53,9 @@ evaluateTablesAndRunRound _ _ _ = error "This should not happen"
 evaluateLosingTablesAndRunRound :: Int -> [Int] -> [Table] -> (Int, Table)
 evaluateLosingTablesAndRunRound prevNum _ [winningTable] =
   (prevNum, winningTable)
-evaluateLosingTablesAndRunRound prevNum (num : numList) tables =
-  evaluateLosingTablesAndRunRound num numList
-    $ (updateTables num . filter (not . isTableComplete)) tables
+evaluateLosingTablesAndRunRound prevNum (num:numList) tables =
+  evaluateLosingTablesAndRunRound num numList $
+  (updateTables num . filter (not . isTableComplete)) tables
 evaluateLosingTablesAndRunRound _ _ _ = error "This should not happen"
 
 updateTables :: Int -> [Table] -> [Table]
@@ -65,9 +65,10 @@ isTableComplete :: Table -> Bool
 isTableComplete table = any isLineComplete table || isAnyColumnComplete table
 
 isAnyColumnComplete :: Table -> Bool
-isAnyColumnComplete ([] : _) = False
-isAnyColumnComplete lines    = (and . mapColumnMarked) lines
-  || isAnyColumnComplete (map (\(_ : rest) -> rest) lines)
+isAnyColumnComplete ([]:_) = False
+isAnyColumnComplete lines =
+  (and . mapColumnMarked) lines ||
+  isAnyColumnComplete (map (\(_:rest) -> rest) lines)
 
 isLineComplete :: [(Int, Bool)] -> Bool
 isLineComplete = all isValueMarked

@@ -11,17 +11,18 @@ getNeighbors maxx maxy y x =
   filter (inBounds maxx maxy) [(x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y)]
 
 getNeighborsWithDiagonals :: Int -> Int -> Int -> Int -> [(Int, Int)]
-getNeighborsWithDiagonals maxx maxy y x = filter
-  (inBounds maxx maxy)
-  [ (x    , y - 1)
-  , (x    , y + 1)
-  , (x - 1, y)
-  , (x + 1, y)
-  , (x - 1, y - 1)
-  , (x - 1, y + 1)
-  , (x + 1, y - 1)
-  , (x + 1, y + 1)
-  ]
+getNeighborsWithDiagonals maxx maxy y x =
+  filter
+    (inBounds maxx maxy)
+    [ (x, y - 1)
+    , (x, y + 1)
+    , (x - 1, y)
+    , (x + 1, y)
+    , (x - 1, y - 1)
+    , (x - 1, y + 1)
+    , (x + 1, y - 1)
+    , (x + 1, y + 1)
+    ]
 
 inBounds :: Int -> Int -> (Int, Int) -> Bool
 inBounds maxx maxy (x, y) = x >= 0 && x < maxx && y >= 0 && y < maxy
@@ -38,5 +39,5 @@ writeValue cmap (x, y) val = cmap & element y . element x .~ val
 
 writeValueLazy :: (Int, Int) -> a -> CoordMap a -> CoordMap a
 writeValueLazy (x, y) val =
-  (\(p, hn : n) -> p ++ ((\(pr, _ : nr) -> pr ++ val : nr) . splitAt x) hn : n)
-    . splitAt y
+  (\(p, hn:n) -> p ++ ((\(pr, _:nr) -> pr ++ val : nr) . splitAt x) hn : n) .
+  splitAt y

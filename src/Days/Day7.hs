@@ -14,8 +14,8 @@ firstQuestion filename = do
 secondQuestion :: String -> IO Int
 secondQuestion filename = do
   posList <- fileToPosList filename
-  let avgs      = getPossibleAvgValues posList
-  let intVals   = map round posList
+  let avgs = getPossibleAvgValues posList
+  let intVals = map round posList
   let distances = map (calculateProgressionList intVals) avgs
   return (minimum distances)
 
