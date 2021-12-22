@@ -9,6 +9,12 @@ import           Data.List
 rmdups :: (Ord a) => [a] -> [a]
 rmdups = map head . group . sort
 
+pairsDup :: [a] -> [(a, a)]
+pairsDup ls =
+  (map (bimap (ls !!) (ls !!)) .
+   filter (uncurry (<)) . concatMap (\i -> map (i, ) [0 .. length ls - 1]))
+    [0 .. length ls - 1]
+
 pairs :: (Ord a) => [a] -> [(a, a)]
 pairs ls =
   (rmdups .
