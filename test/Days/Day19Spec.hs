@@ -14,7 +14,7 @@ spec = do
   describe "First Question" $ do
     it "Example input" $
       firstQuestion "./res/day19/example.txt" `shouldReturn` 79
-    it "Result" $ firstQuestion "./res/day19/input.txt" `shouldReturn` 0
+    it "Result" $ firstQuestion "./res/day19/input.txt" `shouldReturn` 306
   describe "Second Question" $ do
     it "Example Input" $
       secondQuestion "./res/day19/example.txt" `shouldReturn` 3621
