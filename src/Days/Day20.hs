@@ -1,34 +1,71 @@
 module Days.Day20 where
 
-import Data.Char (digitToInt)
-import Util.ListTools
-import Util.MapTools
+import           Data.Char      (digitToInt)
+import           Util.ListTools
+import           Util.MapTools
 
 firstQuestion :: String -> IO Int
 firstQuestion filename = do
   (alg, picture) <- readPicture filename
-  let infiniteValues = if head alg == '#' && alg!!(length alg - 1) == '.' then ['.', '#'] else ['.', '.'] 
+  let infiniteValues =
+        if head alg == '#' && alg !! (length alg - 1) == '.'
+          then ['.', '#']
+          else ['.', '.']
   let initpic = expandPictureIfNeeded picture '.'
-  let finalPicture = foldl (\p x -> expandPictureIfNeeded (enhance p (infiniteValues!!x) alg) (infiniteValues!!x)) initpic [1, 0]
+  let finalPicture =
+        foldl
+          (\p x ->
+             expandPictureIfNeeded
+               (enhance p (infiniteValues !! x) alg)
+               (infiniteValues !! x))
+          initpic
+          [1, 0]
   return ((length . filter (== '#') . concat) finalPicture)
 
 secondQuestion :: String -> IO Int
 secondQuestion filename = do
   (alg, picture) <- readPicture filename
-  let infiniteValues = if head alg == '#' && alg!!(length alg - 1) == '.' then ['.', '#'] else ['.', '.'] 
+  let infiniteValues =
+        if head alg == '#' && alg !! (length alg - 1) == '.'
+          then ['.', '#']
+          else ['.', '.']
   let initpic = expandPictureIfNeeded picture '.'
-  let finalPicture = foldl (\p x -> expandPictureIfNeeded (enhance p (infiniteValues!!x) alg) (infiniteValues!!x)) initpic ((concat . replicate 25) [1, 0])
+  let finalPicture =
+        foldl
+          (\p x ->
+             expandPictureIfNeeded
+               (enhance p (infiniteValues !! x) alg)
+               (infiniteValues !! x))
+          initpic
+          ((concat . replicate 25) [1, 0])
   return ((length . filter (== '#') . concat) finalPicture)
 
 enhance :: CoordMap Char -> Char -> String -> CoordMap Char
-enhance picture c alg = map (\y -> map (\x -> executePatch x y c picture alg) [0 .. length (head picture) - 1]) [0 .. length picture - 1]
+enhance picture c alg =
+  map
+    (\y ->
+       map
+         (\x -> executePatch x y c picture alg)
+         [0 .. length (head picture) - 1])
+    [0 .. length picture - 1]
 
 executePatch :: Int -> Int -> Char -> CoordMap Char -> String -> Char
 executePatch x y c picture alg
-  | x <= 1 || y <= 1 || x >= length (head picture) - 1 || y >= length picture - 1 = c
+  | x <= 1 ||
+      y <= 1 || x >= length (head picture) - 1 || y >= length picture - 1 = c
   | otherwise = alg !! intListToNumber binaryNum
   where
-    binaryNum = map digitToInt $ concatMap (\j -> map (\i -> if accessCoordinate picture (i, j) == '.' then '0' else '1') [x - 1 .. x + 1]) [y - 1 .. y + 1]
+    binaryNum =
+      map digitToInt $
+      concatMap
+        (\j ->
+           map
+             (\i ->
+                if accessCoordinate picture (i, j) == '.'
+                  then '0'
+                  else '1')
+             [x - 1 .. x + 1])
+        [y - 1 .. y + 1]
 
 intListToNumber :: [Int] -> Int
 intListToNumber ls =
@@ -49,12 +86,16 @@ expandPictureIfNeeded picture c =
     lowerGap = all (all (== c)) (drop (length picture - 3) picture)
 
 expandPicture :: CoordMap Char -> Char -> CoordMap Char
-expandPicture picture c = ((replicate 3 completeRow ++) . (++ replicate 3 completeRow) . map ((replicate 3 c ++) . (++ replicate 3 c))) picture
+expandPicture picture c =
+  ((replicate 3 completeRow ++) .
+   (++ replicate 3 completeRow) . map ((replicate 3 c ++) . (++ replicate 3 c)))
+    picture
   where
-    completeRow = replicate 3 c ++ replicate (length (head picture)) c ++ replicate 3 c
+    completeRow =
+      replicate 3 c ++ replicate (length (head picture)) c ++ replicate 3 c
 
 readPicture :: String -> IO (String, CoordMap Char)
 readPicture filename = do
   content <- readFile filename
-  let alg : _ : pic = lines content
+  let alg:_:pic = lines content
   return (alg, pic)
